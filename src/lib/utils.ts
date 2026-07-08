@@ -43,6 +43,27 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   };
 }
 
+// Giờ làm việc của nhân viên theo giờ Đức (Europe/Berlin): 9:00 sáng – 20:00 (8h tối)
+export const STAFF_WORK_START_HOUR = 9;
+export const STAFF_WORK_END_HOUR = 20;
+
+// Lấy giờ hiện tại theo múi giờ Đức (0–23)
+export function getBerlinHour(date: Date = new Date()): number {
+  const hourStr = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Berlin',
+    hour: '2-digit',
+    hour12: false,
+  }).format(date);
+  const hour = parseInt(hourStr, 10);
+  return Number.isNaN(hour) ? 0 : hour === 24 ? 0 : hour;
+}
+
+// Nhân viên chỉ được ghi/sửa doanh thu trong khung 9:00 – 20:00 giờ Đức
+export function isWithinStaffWorkingHours(date: Date = new Date()): boolean {
+  const hour = getBerlinHour(date);
+  return hour >= STAFF_WORK_START_HOUR && hour < STAFF_WORK_END_HOUR;
+}
+
 export function getInitials(name: string): string {
   return name
     .split(' ')

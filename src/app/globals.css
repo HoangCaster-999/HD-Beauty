@@ -90,6 +90,26 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+/* Date input calendar icon — dễ nhìn hơn, sáng lên trong dark mode */
+input[type='date']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 4px;
+  border-radius: 6px;
+  transition: opacity 150ms ease, background-color 150ms ease;
+}
+input[type='date']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: rgba(167, 139, 250, 0.15);
+}
+.dark input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.4);
+  opacity: 0.8;
+}
+.dark input[type='date']::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
 /* Smooth transitions */
 *, *::before, *::after {
   transition-property: color, background-color, border-color, outline-color, box-shadow;

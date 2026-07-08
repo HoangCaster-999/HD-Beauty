@@ -6,12 +6,12 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/contexts/AuthContext';
-import { Store, Scissors } from 'lucide-react';
+import { Store, Wallet } from 'lucide-react';
 
 const baseItems = [
   { href: '/owner/dashboard',    img: '/dashboard.png' as string | null, label: 'Tổng quan' },
   { href: '/owner/staff',        img: '/nhanvien.png',                   label: 'Nhân viên' },
-  { href: '/owner/services',     img: null,                              label: 'Dịch vụ'  },
+  { href: '/owner/revenue',      img: null,                              label: 'Doanh thu' },
   { href: '/owner/transactions', img: '/giaodich.png',                   label: 'Giao dịch' },
   { href: '/owner/reports',      img: '/baocao.png',                     label: 'Báo cáo'  },
 ];
@@ -57,7 +57,7 @@ export default function OwnerBottomNav() {
                     )}
                   />
                 ) : (
-                  <Scissors
+                  <Wallet
                     size={22}
                     className={cn(
                       'relative transition-colors duration-200',

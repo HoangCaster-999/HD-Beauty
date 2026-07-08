@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Store, Moon, Sun, LogOut, Scissors } from 'lucide-react';
+import { Store, Moon, Sun, LogOut, Wallet } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 const NAV_ITEMS = [
   { href: '/owner/dashboard',    img: '/dashboard.png', label: 'Tổng quan'  },
   { href: '/owner/staff',        img: '/nhanvien.png',  label: 'Nhân viên'  },
-  { href: '/owner/services',     img: null,             label: 'Dịch vụ'    },
+  { href: '/owner/revenue',      img: null,             label: 'Doanh thu'  },
   { href: '/owner/transactions', img: '/giaodich.png',  label: 'Giao dịch'  },
   { href: '/owner/reports',      img: '/baocao.png',    label: 'Báo cáo'    },
 ];
@@ -59,7 +59,7 @@ export default function OwnerSidebar() {
                   className={cn('flex-shrink-0 transition-opacity', active ? 'opacity-100' : 'opacity-45 group-hover:opacity-70')}
                 />
               ) : (
-                <Scissors
+                <Wallet
                   size={22}
                   className={cn(
                     'flex-shrink-0 transition-colors',
