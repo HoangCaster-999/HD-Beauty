@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Plus, Wallet } from 'lucide-react';
 import { startOfDay, endOfDay, format, parseISO } from 'date-fns';
@@ -28,9 +28,14 @@ export default function OwnerStaffRevenuePage() {
   const params = useParams();
   const staffId = params.staffId as string;
 
-  const { user } = useAuth();
+  const { user, isOwner } = useAuth();
   const { staff, loading: staffLoading } = useStaff(user?.shopId);
   const { transactions, loading: txLoading } = useStaffTransactions(user?.shopId, staffId);
+
+  // Chỉ chủ tiệm được truy cập — Manager bị chuyển về tổng quan
+  useEffect(() => {
+    if (user && !isOwner) router.replace('/owner/dashboard');
+  }, [user, isOwner, router]);
 
   const member = staff.find((s) => s.id === staffId);
 
@@ -134,6 +139,8 @@ export default function OwnerStaffRevenuePage() {
       setDeleting(false);
     }
   };
+
+  if (user && !isOwner) return null;
 
   return (
     <div>

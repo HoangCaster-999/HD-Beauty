@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { Users, ChevronRight } from 'lucide-react';
@@ -15,9 +15,16 @@ import { getInitials } from '@/lib/utils';
 
 export default function OwnerRevenuePage() {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, isOwner } = useAuth();
   const { staff, loading } = useStaff(user?.shopId);
   const [search, setSearch] = useState('');
+
+  // Chỉ chủ tiệm được truy cập — Manager bị chuyển về tổng quan
+  useEffect(() => {
+    if (user && !isOwner) router.replace('/owner/dashboard');
+  }, [user, isOwner, router]);
+
+  if (user && !isOwner) return null;
 
   // Chỉ hiển thị nhân viên đang hoạt động, sắp xếp theo tên
   const members = staff
