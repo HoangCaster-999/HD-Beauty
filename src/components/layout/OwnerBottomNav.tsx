@@ -18,13 +18,12 @@ const baseItems = [
 
 export default function OwnerBottomNav() {
   const pathname = usePathname();
-  const { user, isOwner } = useAuth();
+  const { user } = useAuth();
   const hasShop  = !!user?.shopId;
 
-  const navItems = (hasShop
+  const navItems = hasShop
     ? baseItems
-    : baseItems.filter(i => i.href === '/owner/dashboard')
-  ).filter(i => i.href !== '/owner/revenue' || isOwner); // Doanh thu: chỉ chủ tiệm
+    : baseItems.filter(i => i.href === '/owner/dashboard');
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-t border-gray-100 dark:border-gray-800 safe-area-bottom">

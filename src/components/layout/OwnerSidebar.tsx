@@ -18,12 +18,11 @@ const NAV_ITEMS = [
 
 export default function OwnerSidebar() {
   const pathname = usePathname();
-  const { user, logout, isOwner } = useAuth();
+  const { user, logout } = useAuth();
   const { toggleTheme, isDark } = useTheme();
   const hasShop = !!user?.shopId;
 
-  // Doanh thu: chỉ chủ tiệm được thấy
-  const navItems = NAV_ITEMS.filter(i => i.href !== '/owner/revenue' || isOwner);
+  const navItems = NAV_ITEMS;
 
   return (
     <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-16 lg:w-56 bg-white dark:bg-gray-900 border-r border-gray-100 dark:border-gray-800 z-40 py-4 transition-all duration-200">
