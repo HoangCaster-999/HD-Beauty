@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { Suspense, useState, useMemo } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Plus, Wallet } from 'lucide-react';
 import { startOfDay, endOfDay, format, parseISO } from 'date-fns';
 import toast from 'react-hot-toast';
@@ -24,9 +24,16 @@ import { formatCurrency, getInitials } from '@/lib/utils';
 import { Transaction } from '@/types';
 
 export default function OwnerStaffRevenuePage() {
+  return (
+    <Suspense>
+      <OwnerStaffRevenueContent />
+    </Suspense>
+  );
+}
+
+function OwnerStaffRevenueContent() {
   const router = useRouter();
-  const params = useParams();
-  const staffId = params.staffId as string;
+  const staffId = useSearchParams().get('staffId') ?? '';
 
   const { user } = useAuth();
   const { staff, loading: staffLoading } = useStaff(user?.shopId);

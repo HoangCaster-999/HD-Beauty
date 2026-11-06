@@ -61,7 +61,7 @@ export default function OwnerRevenuePage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04, duration: 0.3 }}
-                onClick={() => router.push(`/owner/revenue/${s.id}`)}
+                onClick={() => router.push(`/owner/revenue/detail?staffId=${s.id}`)}
                 className="w-full flex items-center gap-3 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-4 shadow-card text-left active:scale-[0.99] transition-transform hover:border-primary-200 dark:hover:border-primary-800"
               >
                 <div className="h-12 w-12 rounded-full bg-gradient-to-br from-primary-400 to-secondary-300 flex items-center justify-center text-white font-bold text-lg flex-shrink-0 overflow-hidden">

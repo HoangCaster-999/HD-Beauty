@@ -269,7 +269,7 @@ export default function SuperAdminDashboard() {
                 <Card>
                   <div className="flex items-start justify-between gap-4">
                     {/* Clickable shop info → detail page */}
-                    <Link href={`/super-admin/shops/${stat.shop.id}`} className="flex items-center gap-3 flex-1 min-w-0 group">
+                    <Link href={`/super-admin/shops/detail?shopId=${stat.shop.id}`} className="flex items-center gap-3 flex-1 min-w-0 group">
                       <div className="h-12 w-12 rounded-2xl bg-gradient-primary flex items-center justify-center flex-shrink-0">
                         <Store size={20} className="text-white" />
                       </div>
@@ -295,7 +295,7 @@ export default function SuperAdminDashboard() {
                         <p className="text-xs text-gray-400">tháng này</p>
                       </div>
                       <Link
-                        href={`/super-admin/shops/${stat.shop.id}`}
+                        href={`/super-admin/shops/detail?shopId=${stat.shop.id}`}
                         className="p-1.5 rounded-xl text-gray-400 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors"
                         title="Xem chi tiết"
                       >

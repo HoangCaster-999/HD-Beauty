@@ -1,6 +1,7 @@
 'use client';
 
-import { use, useEffect, useState, useMemo, ReactNode } from 'react';
+import { Suspense, useEffect, useState, useMemo, ReactNode } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   ArrowLeft, Store, Users, ArrowLeftRight, Scissors, BarChart3,
@@ -50,8 +51,16 @@ const TABS = [
   { label: 'Báo cáo',    icon: BarChart3 },
 ];
 
-export default function ShopDetailPage({ params }: { params: Promise<{ shopId: string }> }) {
-  const { shopId } = use(params);
+export default function ShopDetailPage() {
+  return (
+    <Suspense>
+      <ShopDetailContent />
+    </Suspense>
+  );
+}
+
+function ShopDetailContent() {
+  const shopId = useSearchParams().get('shopId') ?? '';
   const [tab, setTab]   = useState(0);
   const [shop, setShop] = useState<Shop | null>(null);
 
