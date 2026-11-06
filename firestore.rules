@@ -42,7 +42,7 @@ service cloud.firestore {
     // ── shops ───────────────────────────────────────────────
     match /shops/{shopId} {
       allow read:             if isSuperAdmin() || isMemberOf(shopId);
-      allow create:           if isAuthenticated();
+      allow create:           if isSuperAdmin();
       allow update:           if isSuperAdmin() || isOwnerOf(shopId);
       allow delete:           if isSuperAdmin() || isOwnerOf(shopId);
     }
@@ -53,16 +53,29 @@ service cloud.firestore {
                   || (isAuthenticated() && request.auth.uid == userId)
                   || isMemberOf(resource.data.shopId);
 
-      allow create: if isAuthenticated();
+      // Không ai tự tạo hồ sơ cho mình: owner tạo manager/staff, manager tạo staff, trong tiệm của họ.
+      allow create: if isSuperAdmin()
+                    || (isOwnerOf(request.resource.data.shopId)
+                        && request.resource.data.role in ['manager', 'staff'])
+                    || (isManagerOf(request.resource.data.shopId)
+                        && request.resource.data.role == 'staff');
 
       // Chỉ super_admin hoặc owner mới sửa được manager/owner khác.
       // Manager chỉ sửa được chính mình và staff — không sửa owner/manager khác.
+      // Chỉ super_admin đổi được tiệm; không ai tự đổi role, shopId hay active của mình.
       allow update: if isSuperAdmin()
-                    || (isAuthenticated() && request.auth.uid == userId)  // tự sửa bản thân
-                    || (isOwnerOf(resource.data.shopId)
-                        && resource.data.role != 'super_admin')           // owner sửa ai cũng được trừ super_admin
-                    || (isManagerOf(resource.data.shopId)
-                        && resource.data.role == 'staff');                // manager chỉ sửa staff
+                    || (isAuthenticated() && request.auth.uid == userId   // tự sửa bản thân
+                        && request.resource.data.diff(resource.data).affectedKeys()
+                             .hasOnly(['name', 'phone', 'photoURL', 'encryptedPassword']))
+                    || (isOwnerOf(resource.data.shopId)                   // owner sửa ai cũng được trừ super_admin
+                        && resource.data.role != 'super_admin'
+                        && request.resource.data.shopId == resource.data.shopId
+                        && (request.resource.data.role == resource.data.role
+                            || request.resource.data.role in ['manager', 'staff']))
+                    || (isManagerOf(resource.data.shopId)                 // manager chỉ sửa staff
+                        && resource.data.role == 'staff'
+                        && request.resource.data.diff(resource.data).affectedKeys()
+                             .hasOnly(['name', 'phone', 'photoURL', 'encryptedPassword', 'active']));
 
       allow delete: if isSuperAdmin()
                     || isOwnerOf(resource.data.shopId);

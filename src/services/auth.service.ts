@@ -8,7 +8,7 @@ import {
   getAuth,
 } from 'firebase/auth';
 import { initializeApp, deleteApp, getApp as fbGetApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { encryptPassword, decryptPassword } from '@/lib/crypto';
 import { UserRole } from '@/types';
@@ -29,15 +29,14 @@ export async function createStaffAccount(
   const appName = `create-staff-${Date.now()}`;
   const secondaryApp = initializeApp(config, appName);
   const secondaryAuth = getAuth(secondaryApp);
-  const secondaryDb = getFirestore(secondaryApp);
 
   try {
     const cred = await createUserWithEmailAndPassword(secondaryAuth, email, password);
     const uid = cred.user.uid;
 
     const encPwd = await encryptPassword(password);
-    // Use secondaryDb so Firestore sees the new employee's auth token
-    await setDoc(doc(secondaryDb, 'users', uid), {
+    // Ghi bằng token của người tạo: firestore.rules kiểm tra role của người tạo, không phải tài khoản mới
+    await setDoc(doc(db, 'users', uid), {
       shopId,
       role,
       name,
