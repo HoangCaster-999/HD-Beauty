@@ -102,7 +102,7 @@ Mở [http://localhost:3000](http://localhost:3000)
      role: "owner"
      name: "Tên chủ tiệm"
      phone: "0901234567"
-     email: "owner@hdbeauty.app"
+     email: "owner@example.com"
      active: true
      createdAt: [timestamp]
      ```

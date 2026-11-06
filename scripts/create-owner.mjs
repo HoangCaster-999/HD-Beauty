@@ -30,8 +30,12 @@ const firebaseConfig = {
 
 // ============================================================
 // ĐIỀN THÔNG TIN OWNER VÀO ĐÂY
-const OWNER_EMAIL    = 'owner@hdbeauty.app';
-const OWNER_PASSWORD = 'hdbeauty123';
+const OWNER_EMAIL    = vars.OWNER_EMAIL;
+const OWNER_PASSWORD = vars.OWNER_PASSWORD;
+if (!vars.OWNER_EMAIL || !vars.OWNER_PASSWORD) {
+  console.error('Thiếu OWNER_EMAIL, OWNER_PASSWORD trong .env.local');
+  process.exit(1);
+}
 const OWNER_NAME     = 'Chủ Tiệm';
 const OWNER_PHONE    = '0901234567';
 // ============================================================

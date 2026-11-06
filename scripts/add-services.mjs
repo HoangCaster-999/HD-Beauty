@@ -58,8 +58,12 @@ const SERVICES = [
 ];
 // ════════════════════════════════════════════
 
-const OWNER_EMAIL    = 'owner@hdbeauty.app';
-const OWNER_PASSWORD = 'hdbeauty123';
+const OWNER_EMAIL    = vars.OWNER_EMAIL;
+const OWNER_PASSWORD = vars.OWNER_PASSWORD;
+if (!vars.OWNER_EMAIL || !vars.OWNER_PASSWORD) {
+  console.error('Thiếu OWNER_EMAIL, OWNER_PASSWORD trong .env.local');
+  process.exit(1);
+}
 
 const cred   = await signInWithEmailAndPassword(auth, OWNER_EMAIL, OWNER_PASSWORD);
 const shopId = cred.user.uid; // shopId = ownerUid theo cách setup hiện tại

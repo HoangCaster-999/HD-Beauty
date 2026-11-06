@@ -40,15 +40,20 @@ const firebaseConfig = {
 // ═══════════════════════════════════════════
 //   CẤU HÌNH — sửa tại đây nếu cần
 // ═══════════════════════════════════════════
+if (!vars.SUPER_ADMIN_EMAIL || !vars.SUPER_ADMIN_PASSWORD || !vars.OWNER_EMAIL || !vars.OWNER_PASSWORD) {
+  console.error('Thiếu SUPER_ADMIN_EMAIL, SUPER_ADMIN_PASSWORD, OWNER_EMAIL, OWNER_PASSWORD trong .env.local');
+  process.exit(1);
+}
+
 const SUPER_ADMIN = {
-  email:    'superadmin@hdbeauty.app',
-  password: 'superadmin@2024',
+  email:    vars.SUPER_ADMIN_EMAIL,
+  password: vars.SUPER_ADMIN_PASSWORD,
   name:     'Super Admin',
 };
 
 const OWNER = {
-  email:    'owner@hdbeauty.app',
-  password: 'hdbeauty123',
+  email:    vars.OWNER_EMAIL,
+  password: vars.OWNER_PASSWORD,
   name:     'Chủ Tiệm',
   phone:    '0901234567',
 };

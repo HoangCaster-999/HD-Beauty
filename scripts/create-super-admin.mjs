@@ -28,8 +28,12 @@ const firebaseConfig = {
 
 // ============================================================
 // ĐIỀN THÔNG TIN SUPER ADMIN VÀO ĐÂY
-const SA_EMAIL    = 'superadmin@hdbeauty.app';
-const SA_PASSWORD = 'superadmin@2024';
+const SA_EMAIL    = vars.SUPER_ADMIN_EMAIL;
+const SA_PASSWORD = vars.SUPER_ADMIN_PASSWORD;
+if (!vars.SUPER_ADMIN_EMAIL || !vars.SUPER_ADMIN_PASSWORD) {
+  console.error('Thiếu SUPER_ADMIN_EMAIL, SUPER_ADMIN_PASSWORD trong .env.local');
+  process.exit(1);
+}
 const SA_NAME     = 'Super Admin';
 // ============================================================
 
