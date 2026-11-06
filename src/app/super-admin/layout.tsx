@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import Loading from '@/components/ui/Loading';
-import { Moon, Sun, LogOut, LayoutDashboard, Users } from 'lucide-react';
+import { Moon, Sun, LogOut, LayoutDashboard, Users, CalendarX2 } from 'lucide-react';
 import Image from 'next/image';
 import { useTheme } from '@/contexts/ThemeContext';
 import { getInitials } from '@/lib/utils';
@@ -13,6 +13,7 @@ import { getInitials } from '@/lib/utils';
 const NAV = [
   { href: '/super-admin/dashboard', label: 'Tổng quan',    icon: LayoutDashboard },
   { href: '/super-admin/users',     label: 'Người dùng',   icon: Users },
+  { href: '/super-admin/revenue-cleanup', label: 'Xóa doanh thu', icon: CalendarX2 },
 ];
 
 export default function SuperAdminLayout({ children }: { children: React.ReactNode }) {
@@ -59,7 +60,8 @@ export default function SuperAdminLayout({ children }: { children: React.ReactNo
                     }`}
                   >
                     <Icon size={14} />
-                    {label}
+                    {/* Màn hình hẹp: chỉ tab đang mở hiện chữ để 3 tab không tràn header */}
+                    <span className={active ? 'whitespace-nowrap' : 'hidden sm:inline whitespace-nowrap'}>{label}</span>
                   </Link>
                 );
               })}

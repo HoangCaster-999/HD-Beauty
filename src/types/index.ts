@@ -48,6 +48,18 @@ export interface Transaction {
   createdAt: Timestamp;
 }
 
+export interface RevenueDeletionLog {
+  id: string;
+  shopId: string;
+  shopName: string;
+  month: string; // 'YYYY-MM' theo giờ Đức
+  transactionCount: number;
+  totalAmount: number;
+  deletedBy: string;
+  deletedByName: string;
+  deletedAt: Timestamp;
+}
+
 export interface StaffReport {
   staffId: string;
   staffName: string;

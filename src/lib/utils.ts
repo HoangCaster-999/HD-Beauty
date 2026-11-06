@@ -64,6 +64,18 @@ export function isWithinStaffWorkingHours(date: Date = new Date()): boolean {
   return hour >= STAFF_WORK_START_HOUR && hour < STAFF_WORK_END_HOUR;
 }
 
+// Khóa tháng 'YYYY-MM' theo giờ Đức — không phụ thuộc múi giờ của máy đang dùng
+export function getBerlinMonthKey(date: Date = new Date()): string {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Berlin',
+    year: 'numeric',
+    month: '2-digit',
+  }).formatToParts(date);
+  const year = parts.find((p) => p.type === 'year')?.value;
+  const month = parts.find((p) => p.type === 'month')?.value;
+  return `${year}-${month}`;
+}
+
 export function getInitials(name: string): string {
   return name
     .split(' ')

@@ -86,5 +86,15 @@ service cloud.firestore {
                         && resource.data.staffId == request.auth.uid);
       allow delete: if isSuperAdmin() || isAdminOf(resource.data.shopId);
     }
+
+    // ── lịch sử xóa doanh thu ───────────────────────────────
+    // Chỉ super_admin. Update chỉ để cộng dồn số liệu khi xóa nhiều lô; không ai xóa được lịch sử.
+    match /revenueDeletionLogs/{logId} {
+      allow read:   if isSuperAdmin();
+      allow create: if isSuperAdmin() && request.resource.data.deletedBy == request.auth.uid;
+      allow update: if isSuperAdmin()
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['transactionCount', 'totalAmount']);
+    }
   }
 }
